@@ -1,0 +1,27 @@
+#!/bin/sh
+. /lib/svc/share/smf_include.sh
+### ### ### ASS // ### ### ###
+
+#// prepare root configs
+cp /zones/ass.de/admin/.profile /root
+cp /zones/ass.de/admin/.screenrc /root
+cp /zones/ass.de/admin/.vimrc /root
+
+#// zabbix
+svcadm disable mount_usbkey_userfiles
+groupadd -g 808 zabbix
+useradd -u 808 -g 808 -d /nonexistent -s /usr/bin/false zabbix
+svcadm enable mount_usbkey_userfiles
+#// zabbix start
+/opt/zabbix/sbin/zabbix_agentd -c /opt/zabbix/conf/zabbix_agentd.conf
+
+#// sendmail
+/opt/custom/scripts/20-sendmail.sh
+
+#// new rsyslog.conf (forward to graylog container)
+cp /zones/ass.de/admin/etc_rsyslog.conf /etc/rsyslog.conf
+svcadm restart svc:/system/system-log:default
+
+### ### ### // ASS ### ### ###
+exit $SMF_EXIT_OK
+# EOF

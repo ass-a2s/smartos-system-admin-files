@@ -1,0 +1,44 @@
+#!/usr/bin/bash
+
+case "$1" in
+'start')
+  if [[ -n $(/bin/bootparams | grep '^smartos=true') ]]; then
+    if [[ -z $(/usr/sbin/mount -p | grep '/etc/passwd') ]]; then 
+      if [[ /etc/passwd -ot /usbkey/passwd ]]; then
+        cp /usbkey/passwd /etc/passwd
+      else
+        cp /etc/passwd /usbkey/passwd 
+      fi
+      touch /etc/passwd /usbkey/passwd
+      mount -F lofs /usbkey/passwd /etc/passwd
+    fi
+    if [[ -z $(/usr/sbin/mount -p | grep '/etc/group') ]]; then 
+      if [[ /etc/group -ot /usbkey/group ]]; then
+        cp /usbkey/group /etc/group
+      else
+        cp /etc/group /usbkey/group 
+      fi
+      touch /etc/group /usbkey/group
+      mount -F lofs /usbkey/group /etc/group
+    fi
+    if [[ -z $(/usr/sbin/mount -p | grep '/etc/shadow') ]]; then 
+      if [[ /etc/shadow -ot /usbkey/shadow ]]; then
+        cp /usbkey/shadow /etc/shadow
+      else
+        cp /etc/shadow /usbkey/shadow 
+      fi
+      touch /etc/shadow /usbkey/shadow
+      mount -F lofs /usbkey/shadow /etc/shadow
+    fi
+  fi
+  ;;
+'stop')
+  if [[ -n $(/usr/sbin/mount -p | grep 'group') ]]; then umount /etc/group; touch /etc/group; fi
+  if [[ -n $(/usr/sbin/mount -p | grep 'passwd') ]]; then umount /etc/passwd; touch /etc/passwd; fi
+  if [[ -n $(/usr/sbin/mount -p | grep 'shadow') ]]; then umount /etc/shadow; touch /etc/shadow; fi
+  ;;
+*)
+  echo "Usage: $0 { start | stop }"
+  exit 1
+  ;;
+esac

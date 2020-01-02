@@ -1,0 +1,15 @@
+### ### ### ASS // ### ### ###
+
+#// CUSTOM
+
+root_authorized_keys_file=authorized_keys
+default_keymap=germany
+
+mail_smarthost=XXX.XXX.XXX.XXX
+mail_sender_domain=XXX.XXX.XXX
+mail_auth_user=XXX
+mail_auth_pass=XXX
+mail_adminaddr=XXX@XXX.XXX
+
+### ### ### // ASS ### ### ###
+# EOF
