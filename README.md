@@ -2,14 +2,17 @@
 SmartOS System Admin Files
 ==========================
 
-* include: SCREEN Config
-* include: VIM Config
-* include: smf/smartos-customizing
-* include: smartos-zone-backup Script
+* include: **SCREEN** Config
+* include: **VIM** Config
+* include: smf/**smartos-customizing**
+* include: **RSYSLOG** Config
+
+* include: **smartos-zone-backup** Script
   * https://github.com/ass-a2s/smartos-zone-backup
-* include: Zabbix Agent 3.2.0
-  * check: ZFS Health
-  * check: VM Status
+
+* include: **Zabbix Agent** 3.2.0
+  * check: **ZFS Health**
+  * check: **VM Status**
 
 Zabbix Server Configuration - ZFS Health
 ========================================
